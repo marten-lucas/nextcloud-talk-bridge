@@ -26,6 +26,12 @@ On CT300 you need:
 
 The bridge reads `/etc/nextcloud-talk-bridge/nextcloud-talk-bridge.env`.
 
+You can deliver that file in one of three ways:
+
+1. Let `deployment/ct300_update.sh` synthesize it from local env variables.
+2. Point `CT300_BRIDGE_ENV_FILE` at a local `.env` file that should be copied to CT300.
+3. Provide `CT300_BRIDGE_ENV_B64` with a base64-encoded env file payload.
+
 Minimum values:
 
 ```bash
@@ -48,6 +54,8 @@ Notes:
 - `NEXTCLOUD_TALK_BOT_SECRET` must match the secret used when installing the bot.
 - `IRONCLAW_WEBHOOK_SECRET` must match Ironclaw's HTTP Webhook secret.
 - `NEXTCLOUD_TALK_BACKEND_ALLOWLIST` should contain the Nextcloud host that sends the webhook.
+- The bridge service never needs the Nextcloud admin password or your YunoHost SSH password.
+  It only needs the bot secret and the Ironclaw webhook secret.
 
 ## 4. Deploy the bridge to CT300
 

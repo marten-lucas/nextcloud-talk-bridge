@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { config } from "./config.js";
-import { enqueueIronclawMessage, waitForIronclawResponse } from "./ironclaw.js";
+import { enqueueIronclawMessage } from "./ironclaw.js";
 import {
   backendAllowed,
   extractTalkToken,
@@ -120,7 +120,7 @@ async function handleCreate(event: TalkEvent, roomToken: string): Promise<void> 
   const conversationId = await store.conversationFor(roomToken, topicKey);
   const cleanPrompt = stripMention(text);
 
-  const jobId = await enqueueIronclawMessage({
+  const responseText = await enqueueIronclawMessage({
     userId: `nc:${event.actor?.id ?? "unknown"}`,
     message: cleanPrompt || text,
     conversationId,
@@ -134,8 +134,6 @@ async function handleCreate(event: TalkEvent, roomToken: string): Promise<void> 
       topic_key: topicKey ?? null
     }
   });
-
-  const responseText = await waitForIronclawResponse(jobId);
   if (!responseText.trim()) {
     return;
   }
