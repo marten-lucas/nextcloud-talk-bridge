@@ -1,0 +1,28 @@
+{
+  "name": "nextcloud-talk-bridge",
+  "version": "0.1.0",
+  "description": "Bridge between Nextcloud Talk bot webhooks and Ironclaw HTTP webhook",
+  "private": true,
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marten-lucas/nextcloud-talk-bridge"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.23",
+    "@types/node": "^22.16.5",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
