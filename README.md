@@ -2,6 +2,10 @@
 
 Small bridge service for Nextcloud Talk bot webhooks and Ironclaw HTTP webhook.
 
+## Status
+
+Deprecated migration bridge. The native Ironclaw Nextcloud Talk channel now owns the primary ingress and outbound fake-user delivery path. Keep this service only for rollback or temporary transition.
+
 ## What V1 does
 
 - Verifies Nextcloud Talk webhook signatures (`X-Nextcloud-Talk-Signature` + `X-Nextcloud-Talk-Random`).
@@ -10,6 +14,10 @@ Small bridge service for Nextcloud Talk bot webhooks and Ironclaw HTTP webhook.
 - Maintains persistent room-to-conversation mapping in local JSON storage.
 - Sends incoming messages to Ironclaw HTTP webhook channel.
 - Polls Ironclaw job status and posts final response back to Nextcloud Talk Bot API.
+
+## Migration note
+
+The bridge still uses the legacy bot-secret path (`NEXTCLOUD_TALK_BOT_SECRET`) and the legacy bot message endpoint. New deployments should use the native Nextcloud channel instead.
 
 ## V1 limitations
 

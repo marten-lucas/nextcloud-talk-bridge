@@ -98,6 +98,9 @@ export function stripMention(text: string): string {
   return text.replace(config.botMentionRegex, "").trim();
 }
 
+/**
+ * @deprecated Legacy OCC bot-secret bridge path retained for migration only.
+ */
 export async function sendBotMessage(roomToken: string, message: string, replyTo?: string): Promise<void> {
   const endpoint = `${config.nextcloudBaseUrl}/ocs/v2.php/apps/spreed/api/v1/bot/${encodeURIComponent(roomToken)}/message`;
   const payload = {
@@ -123,6 +126,16 @@ export async function sendBotMessage(roomToken: string, message: string, replyTo
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`Nextcloud bot message failed: ${response.status} ${text}`);
+    const statusClass = `${Math.floor(response.status / 100)}xx`;
+    console.warn(
+      JSON.stringify({
+        event: "nextcloud_outbound_error",
+        endpoint,
+        status: response.status,
+        statusClass,
+        retry: false
+      })
+    );
+    throw new Error(`Nextcloud bot message failed: ${response.status} ${statusClass} ${text}`);
   }
 }

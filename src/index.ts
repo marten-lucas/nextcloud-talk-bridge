@@ -19,6 +19,10 @@ import { TalkEvent } from "./types.js";
 const app = express();
 const store = new MappingStore(config.dataDir);
 
+console.warn(
+  "nextcloud-talk-bridge is deprecated: the native Ironclaw Nextcloud channel now owns ingress and outbound delivery, and the bridge remains only as a migration fallback"
+);
+
 app.get("/healthz", (_req: Request, res: Response) => {
   res.json({ ok: true, service: "nextcloud-talk-bridge" });
 });
